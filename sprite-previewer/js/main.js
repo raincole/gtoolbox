@@ -141,7 +141,6 @@ function handleDragOver(e) {
 
 function handleDragLeave(e) {
   exclusiveEvent(e);
-  e.dataTransfer.dropEffect = 'copy';
 
   dropArea.style.borderColor = GRAY; 
   dropTip.style.color = GRAY;
