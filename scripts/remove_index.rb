@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Rename Illustrator-exported xxx_01.png to xxx.png
-# Usage: tools/remove_index.rb android/assets
+# Usage: scripts/remove_index.rb android/assets
 
 require 'fileutils'
 
