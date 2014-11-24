@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Pack images into texture atlas
-# Usage: tools/pack_atlas.rb ~/AndroidStudioProjects/tools/libgdx/ android/assets/img/ui/overlay/unpacked ui
+# Usage: scripts/pack_atlas.rb ~/AndroidStudioProjects/tools/libgdx/ android/assets/img/ui/overlay/unpacked ui
 
 scales = [2, 4, 6, 8, 10, 12]
 tool_dir = ARGV[0]

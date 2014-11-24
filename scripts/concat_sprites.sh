@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Make sprite sheet from image sequence
-# Usage: tools/concat_sprite matty 5
+# Usage: scripts/concat_sprite matty 5
 # which reads 'matty_???x???_xxxx.png files and output ???x???/matty.png, 5 columns per row
 
 scales=(2 4 6 8 10 12)
