@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>GtoolBox Sprite Previewer</title>
+  <meta name="description" content="The GtoolBox's sprite previewer">
+  <meta name="author" content="Raincole Lai">
+
+  <link rel="stylesheet" href="shared/css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="sidebar">
+    <form class="config">
+      <label for="fps-input">FPS</label>
+      <input id="fps-input" type="text" value="10" name="fps"></input>
+      <button id="start-stop-button">Start</button>
+      <button id="next-frame-button">&gt;</button>
+      <button id="prev-frame-button">&lt;</button>
+    </form>
+  </div>
+  <div class="main-content">
+    <div class="drop-area">
+      <div class="sprite-container">
+        <div class="frame-container">
+          <img class="frame"></img>
+        </div>
+        <div class="file-name"></div>
+      </div>
+      <div class="drop-tip">Drop images here</div>
+      <progress class="load-progress" value="0.5"></progress>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
