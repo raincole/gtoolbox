@@ -1,0 +1,68 @@
+body {
+  font-size: 20px;
+}
+
+.sidebar {
+  width: 250px;
+  float: left;
+  padding: 30px 20px;
+}
+
+form.config input {
+  font-size: 16px;
+  margin: 6px 2px;
+  display: block;
+}
+
+form.config button {
+  font-size: 16px;
+  margin: 6px 4px;
+  padding: 2px 6px;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 25px 10px;
+}
+
+.drop-area {
+  border: 3px dashed gray;
+  min-height: 500px;
+}
+
+.drop-area > .drop-tip {
+  color: gray;
+  font-size: 48px;
+  margin: 50px auto;
+  text-align: center;
+  font-family: Arial;
+}
+
+.load-progress {
+  display: block;
+  height: 30px;
+  width: 400px;
+  margin: 250px auto;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.load-progress::-webkit-progress-bar {
+  background-color: #AAAAAA;
+}
+
+.load-progress::-webkit-progress-value {
+  background-color: #6482FA;
+}
+
+.frame-container {
+  margin-top: 150px;
+  text-align: center;
+}
+
+.file-name {
+  text-align: center;
+  font-size: 16px;
+  font-family: Trebuchet MS;
+  margin-top: 12px;
+}
