@@ -20,6 +20,11 @@ def non_patched_file_path(file_path)
   file_path.gsub('.9.png', '.png')
 end
 
+def delete_non_patched_file(patched_file_path)
+  non_patched = non_patched_file_path(patched_file_path)
+  File.delete(non_patched) if File.exist?(non_patched)
+end
+
 BASE_WIDTH = 960
 BASE_HEIGHT = 1536
 scales = [2, 4, 6, 8, 10]
@@ -49,6 +54,8 @@ original_image.each_pixel do |pixel, c, r|
     padding_right = c
   end
 end
+
+delete_non_patched_file(original_image_path)
 
 puts "original file: #{original_image_path}"
 puts "original patch: (#{patch_left}, #{patch_right}) x (#{patch_top}, #{patch_bottom})"
@@ -80,6 +87,8 @@ scales.each do |scale|
 
   patched_image_path = File.join(base_dir, resolution, file_name + '.9.png')
   patched_image.write(patched_image_path)
+
+  delete_non_patched_file(patched_image_path)
 
   puts "======================================================="
   puts "scaled file: #{patched_image_path}"
