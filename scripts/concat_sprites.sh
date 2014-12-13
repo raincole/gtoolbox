@@ -14,6 +14,7 @@ do
     output_dir="${dirname}/${resolution}"
     output="${output_dir}/${basename}.png"
     mkdir $output_dir &> /dev/null
+    echo "Output file $output..."
     montage -mode concatenate -background none -tile ${2}x $input $output &&
         rm $input
 done
