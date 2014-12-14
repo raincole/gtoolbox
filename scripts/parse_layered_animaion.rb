@@ -45,8 +45,8 @@ Dir[image_blob].map do |image_path|
 
   if top_x && bottom_x
     position = {
-      :x => (bottom_x + top_x) / 2,
-      :y => (bottom_y + top_y) / 2
+      :x => (bottom_x + top_x) / 2 - image.columns / 2.0,
+      :y => (bottom_y + top_y) / 2 - image.rows / 2.0,
     }
 
     delta_x = top_x - bottom_x
