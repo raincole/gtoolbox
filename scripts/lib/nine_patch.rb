@@ -37,20 +37,20 @@ def apply_patch(original_image_path, scaled_image_path)
   puts "original padding: (#{padding_left}, #{padding_right}) x (#{padding_top}, #{padding_bottom})"
 
   scaled_image = ImageList.new(scaled_image_path)[0]
-  scale = scaled_image.columns.to_f / original_image.columns
+  scale = scaled_image.columns.to_f / (original_image.columns - 2)
 
   width = scaled_image.columns + 2
   height = scaled_image.rows + 2
   patched_image = Image.new(width, height) { self.background_color = 'transparent' }
   
-  scaled_patch_top = clamped(scaled(patch_top, scale), 1, height - 2)
-  scaled_patch_bottom = clamped(scaled(patch_bottom, scale), 1, height - 2)
-  scaled_patch_left = clamped(scaled(patch_left, scale), 1, width - 2)
-  scaled_patch_right = clamped(scaled(patch_right, scale), 1, width - 2)
-  scaled_padding_top = clamped(scaled(padding_top, scale), 1, height - 2)
-  scaled_padding_bottom = clamped(scaled(padding_bottom, scale), 1, height - 2)
-  scaled_padding_left = clamped(scaled(padding_left, scale), 1, width - 2)
-  scaled_padding_right = clamped(scaled(padding_right, scale), 1, width - 2)
+  scaled_patch_top = clamped(scaled(patch_top-1, scale), 1, height - 2) + 1
+  scaled_patch_bottom = clamped(scaled(patch_bottom-1, scale), 1, height - 2) + 1
+  scaled_patch_left = clamped(scaled(patch_left-1, scale), 1, width - 2) + 1
+  scaled_patch_right = clamped(scaled(patch_right-1, scale), 1, width - 2) + 1
+  scaled_padding_top = clamped(scaled(padding_top-1, scale), 1, height - 2) + 1
+  scaled_padding_bottom = clamped(scaled(padding_bottom-1, scale), 1, height - 2) + 1
+  scaled_padding_left = clamped(scaled(padding_left-1, scale), 1, width - 2) + 1
+  scaled_padding_right = clamped(scaled(padding_right-1, scale), 1, width - 2) + 1
 
   (scaled_patch_top..scaled_patch_bottom).each { |r| patched_image.pixel_color(0, r, 'black') }
   (scaled_patch_left..scaled_patch_right).each { |c| patched_image.pixel_color(c, 0, 'black') }
