@@ -17,7 +17,7 @@ else
   dict = []
   FileUtils.mkdir('tmp') unless File.exists?('tmp')
 
-  Dir['*/**/*.psd', '*/**/*.ai'].each.with_index do |image_path, i|
+  Dir['*/**/*.psd', '*/**/*.ai', '*/**/*.ttf'].each.with_index do |image_path, i|
     FileUtils.mv(image_path, "tmp/#{i}")
     dict[i] = image_path
   end
