@@ -7,13 +7,12 @@
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'lib/nine_patch.rb'
-
-BASE_WIDTH = 960
-BASE_HEIGHT = 1536
-scales = [2, 4, 6, 8, 10]
+require 'json'
 
 base_dir = ARGV[0]
 file_name = ARGV[1]
+config_path = File.join(File.dirname(__FILE__), 'config')
+resolution_config = JSON.parse(File.read(File.join(config_path,'/resolution.json')), :symbolize_names => true)
 
 def non_patched_file_path(file_path)
   file_path.gsub('.9.png', '.png')
@@ -25,10 +24,11 @@ def delete_non_patched_file(patched_file_path)
 end
 
 
-original_image_path = File.join(base_dir, "#{BASE_WIDTH}x#{BASE_HEIGHT}", file_name + '.9.png')
+original_image_path = File.join(base_dir, "#{resolution_config[:baseWidth]}x#{resolution_config[:baseHeight]}", file_name + '.9.png')
 
-scales.each do |scale|
-  resolution = "#{BASE_WIDTH*scale/12}x#{BASE_HEIGHT*scale/12}"
+resolution_config[:widths].each do |width|
+  height = resolution_config[:baseHeight] * width / resolution_config[:baseWidth]
+  resolution = "#{width}x#{height}"
   scaled_image_path = File.join(base_dir, resolution, file_name + '.png')
   patched_image = apply_patch(original_image_path, scaled_image_path)
 
@@ -37,8 +37,9 @@ scales.each do |scale|
 
   puts "scaled file: #{patched_image_path}"
 
-  delete_non_patched_file(original_image_path)
-
   delete_non_patched_file(patched_image_path)
 end
+
+delete_non_patched_file(original_image_path)
+
 

@@ -44,12 +44,12 @@ Dir[font_glob].each do |setting_erb_path|
   font_name = setting_path.gsub(/\.hiero$/, '').split('/')[-1]
 
   context = ERBContext.new
-  context.base_width = resolution_config[:base_width]
+  context.base_width = resolution_config[:baseWidth]
   context.dir = File.dirname(File.absolute_path(setting_path))
 
   resolution_config[:widths].each do |width|
     context.real_width = width
-    height = resolution_config[:base_height] * width / resolution_config[:base_width]
+    height = resolution_config[:baseHeight] * width / resolution_config[:baseWidth]
     File.open(setting_path, 'w') do |f|
       f.write(ERB.new(File.read(setting_erb_path)).result(context.get_bindings))
     end

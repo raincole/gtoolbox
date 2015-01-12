@@ -1,18 +1,21 @@
+#include "vendor/json2.js"
+
 var doc = app.activeDocument;
-var baseSuffixWidth = 960;
-var baseSuffixHeight = 1536;
+var baseWidth;
+var baseHeight;
 var docName = doc.name.toString().replace(".psd", "");
 var frameRate = parseFloat(docName.match(/_(\d+)fps/)[1]);
 docName = docName.replace(/_\d+fps/, '');
 
-function exportImageSequence(scale) {
+function exportImageSequence(width) {
+  var height = ~~(baseHeight * width / baseWidth);
   var idExpr = charIDToTypeID( "Expr" );
   var desc13 = new ActionDescriptor();
   var idUsng = charIDToTypeID( "Usng" );
   var desc14 = new ActionDescriptor();
   var iddirectory = stringIDToTypeID( "directory" );
   desc14.putPath( iddirectory, new File( doc.path ) );
-  var filename = docName + '_' + baseSuffixWidth * scale / 12 + 'x' + baseSuffixHeight * scale / 12 + '_' + '.png';
+  var filename = docName + '_' + width + 'x' + height + '_' + '.png';
   var idNm = charIDToTypeID( "Nm  " );
   desc14.putString( idNm, filename);
   var idsubdirectory = stringIDToTypeID( "subdirectory" );
@@ -40,9 +43,9 @@ function exportImageSequence(scale) {
   var idstartNumber = stringIDToTypeID( "startNumber" );
   desc14.putInteger( idstartNumber, 1 );
   var idWdth = charIDToTypeID( "Wdth" );
-  desc14.putInteger( idWdth, doc.width * scale / 12 );
+  desc14.putInteger( idWdth, doc.width * width / baseWidth );
   var idHght = charIDToTypeID( "Hght" );
-  desc14.putInteger( idHght, doc.height * scale / 12 );
+  desc14.putInteger( idHght, doc.height * width / baseWidth );
   var idframeRate = stringIDToTypeID( "frameRate" );
   desc14.putDouble( idframeRate, frameRate );
   var idallFrames = stringIDToTypeID( "allFrames" );
@@ -59,9 +62,18 @@ function exportImageSequence(scale) {
 }
 
 function main() {
-  scales = [2, 4, 6, 8, 10, 12];
-  for(var i in scales)
-    exportImageSequence(scales[i]);
+  var path = $.fileName.substring(0,$.fileName.lastIndexOf("/")+1);
+  var f = new File(path+"./config/resolution.json");
+  f.open('r');
+  var resolutionConfig = JSON.parse(f.read());
+  f.close();
+
+  baseWidth = resolutionConfig.baseWidth;
+  baseHeight = resolutionConfig.baseHeight;
+
+  for(var i in resolutionConfig.widths) {
+    exportImageSequence(resolutionConfig.widths[i]);
+  }
 }
   
 if (!app.activeDocument.saved)

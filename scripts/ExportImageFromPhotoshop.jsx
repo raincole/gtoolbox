@@ -1,8 +1,12 @@
-var doc = app.activeDocument;
-var baseSuffixWidth = 960;
-var baseSuffixHeight = 1536;
+#include "vendor/json2.js"
 
-function exportImageSequence(scale) {
+var doc = app.activeDocument;
+var baseWidth;
+var baseHeight;
+
+function exportImageSequence(width) {
+  var height = ~~(baseHeight * width / baseWidth);
+
   var idExpr = charIDToTypeID( "Expr" );
   var desc19 = new ActionDescriptor();
   var idUsng = charIDToTypeID( "Usng" );
@@ -14,7 +18,7 @@ function exportImageSequence(scale) {
   var idDIDr = charIDToTypeID( "DIDr" );
   desc20.putBoolean( idDIDr, true );
   var idIn = charIDToTypeID( "In  " );
-  desc20.putPath( idIn, new File( doc.path + '/' + baseSuffixWidth * scale / 12 + 'x' + baseSuffixHeight * scale / 12 ) );
+  desc20.putPath( idIn, new File( doc.path + '/' + width + 'x' + height) );
   var idFmt = charIDToTypeID( "Fmt " );
   var idIRFm = charIDToTypeID( "IRFm" );
   var idPNtwofour = charIDToTypeID( "PN24" );
@@ -35,10 +39,10 @@ function exportImageSequence(scale) {
   desc20.putInteger( idMttB, 255 );
   var idHScl = charIDToTypeID( "HScl" );
   var idPrc = charIDToTypeID( "#Prc" );
-  desc20.putUnitDouble( idHScl, idPrc, 100 * scale / 12  );
+  desc20.putUnitDouble( idHScl, idPrc, 100 * width / baseWidth  );
   var idVScl = charIDToTypeID( "VScl" );
   var idPrc = charIDToTypeID( "#Prc" );
-  desc20.putUnitDouble( idVScl, idPrc, 100 * scale / 12 );
+  desc20.putUnitDouble( idVScl, idPrc, 100 * width / baseWidth );
   var idSHTM = charIDToTypeID( "SHTM" );
   desc20.putBoolean( idSHTM, false );
   var idSImg = charIDToTypeID( "SImg" );
@@ -240,9 +244,18 @@ function exportImageSequence(scale) {
 }
 
 function main() {
-  scales = [2, 4, 6, 8, 10, 12];
-  for(var i in scales)
-    exportImageSequence(scales[i]);
+  var path = $.fileName.substring(0,$.fileName.lastIndexOf("/")+1);
+  var f = new File(path+"./config/resolution.json");
+  f.open('r');
+  var resolutionConfig = JSON.parse(f.read());
+  f.close();
+
+  baseWidth = resolutionConfig.baseWidth;
+  baseHeight = resolutionConfig.baseHeight;
+
+  for(var i in resolutionConfig.widths) {
+    exportImageSequence(resolutionConfig.widths[i]);
+  }
 }
   
 if (!app.activeDocument.saved)

@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 
 # Pack images into texture atlas
-# Usage: scripts/pack_atlas.rb ~/AndroidStudioProjects/tools/libgdx/ android/assets/img/ui/overlay/unpacked ui
+# Usage: scripts/pack_atlas.rb ~/AndroidStudioProjects/tools/libgdx/dist android/assets/img/overlay/unpacked packed
 
-scales = [2, 4, 6, 8, 10, 12]
+require 'json'
+
 tool_dir = ARGV[0]
 input_dir = File.expand_path(ARGV[1])
 output_dir = File.join(input_dir.split('/')[0...-1].join('/'), ARGV[2])
+config_path = File.join(File.dirname(__FILE__), 'config')
+resolution_config = JSON.parse(File.read(File.join(config_path,'/resolution.json')), :symbolize_names => true)
 
 packer_config = <<CONFIG
 {
@@ -18,8 +21,9 @@ CONFIG
 
 Dir.chdir(tool_dir)
 
-scales.each do |scale|
-  scale_suffix = "#{960*scale/12}x#{1536*scale/12}"
+resolution_config[:widths].each do |width|
+  height = resolution_config[:baseHeight] * width / resolution_config[:baseWidth]
+  scale_suffix = "#{width}x#{height}"
   scaled_input_dir = File.join(input_dir, scale_suffix)
   scaled_output_dir = File.join(output_dir, scale_suffix)
   Dir.mkdir(output_dir) unless File.exists?(output_dir)
