@@ -11,8 +11,10 @@ class ERBContext
   attr_accessor :base_width
   attr_accessor :real_width
 
-  def characters_from(glob)
-    str = Dir[glob].map { |filename| File.read(filename) }.join.split.to_a.uniq.join
+  def characters_from(*globs)
+    globs.each do |glob|
+      str = Dir[glob].map { |filename| File.read(filename) }.join.split.to_a.uniq.join
+    end
   end
 
   def standard_characters
