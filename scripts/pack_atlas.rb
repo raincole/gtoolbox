@@ -13,8 +13,8 @@ resolution_config = JSON.parse(File.read(File.join(config_path,'/resolution.json
 
 packer_config = <<CONFIG
 {
-  paddingX: 0,
-  paddingY: 0,
+  paddingX: 2,
+  paddingY: 2,
   edgePadding: false
 }
 CONFIG
