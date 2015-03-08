@@ -5,6 +5,7 @@ var baseWidth;
 var baseHeight;
 var docName = doc.name.toString().replace(".psd", "");
 var frameRate = parseFloat(docName.match(/_(\d+)fps/)[1]);
+if(frameRate == NaN) frameRate = 10;
 docName = docName.replace(/_\d+fps/, '');
 
 function exportImageSequence(width) {
