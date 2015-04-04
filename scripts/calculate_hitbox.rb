@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-# Usage: scripts/calculate_hitbox.rb android/assets/img/sprite/character/matty/960x1536/idle-1.png android/assets/img/sprite/character/matty/+hitbox+idle_1.json 4 5
-# which calculate hitbox of 'idle-1.png', which is 4x5 spritesheet
+# Usage: scripts/calculate_hitbox.rb android/assets/img/sprite/character/matty/960x1536/idle-1.png android/assets/img/sprite/character/matty/+hitbox+idle_1.json 4 5 0 0
+# which calculate hitbox of 'idle-1.png', which is 4x5 spritesheet, no extra space in width or height
 # and output to '+hitbox+idle-1.json'
 
 require 'json'
@@ -12,6 +12,8 @@ input_path = ARGV[0]
 output_path = ARGV[1]
 rows = ARGV[2].to_i
 cols = ARGV[3].to_i
+half_extra_width = ARGV[4] ? ARGV[4].to_i : 0
+half_extra_height = ARGV[5] ? ARGV[5].to_i : 0
 
 puts "Reading image #{input_path}..."
 
@@ -41,6 +43,10 @@ hitboxes = []
       :y => bottom,
       :width => right - left + 1,
       :height => top - bottom + 1,
+      :extraLeft => half_extra_width,
+      :extraRight => half_extra_width,
+      :extraTop => half_extra_height,
+      :extraBottom => half_extra_height,
     }
   end
 end
