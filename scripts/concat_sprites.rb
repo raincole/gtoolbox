@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Make sprite sheet from image sequence
-# Usage: scripts/concat_sprite.rb android/assets/img/sprite/character/matty/idle-1 5
+# Usage: scripts/concat_sprites.rb android/assets/img/sprite/character/matty/idle-1 5
 # which reads 'idle-1_???x???_xxxx.png files and output ???x???/matty.png, 5 columns per row
 
 require 'json'
