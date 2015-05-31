@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-# Extract nine-patch border from original image and apply to scaled images
-# Usage: scripts/apply_scaled_nine_patch.rb android/assets/img/ui/overlay/unpacked/food-grid.9.png android/assets/img/ui/overlay/unpacked/food-item.png
+# Extract nine-patch border from original image and apply to another image
+# Usage: scripts/apply_single_nine_patch.rb android/assets/img/ui/overlay/unpacked/food-grid.9.png android/assets/img/ui/overlay/unpacked/food-item.png
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rmagick'
